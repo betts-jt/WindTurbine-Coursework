@@ -20,25 +20,27 @@ while Error > tol
     % CALCULATE LIFT AND DRAG COEFFICIENTS
     mew = 1.81e-5; % Dynamic viscosity of air at 15oC. kg/ms
     rho = 1.225; % Density of air at 15oC. kg/m3
-    Vrel = ((V0*(1-a))^2+(omega*y*(1-adash)^2))^0.5; %Calculating the relative velociy of the airflow. m/s
+    Vrel = ((V0*(1-a))^2 + (omega*y*(1+adash))^2)^0.5; %Calculating the relative velociy of the airflow. m/s
     
     Re = (rho*Vrel*Chord)/mew; % Calculating the reynolds number.
     [Cl, Cd] = ForceCoefficient(alpha, Re); % Running function to calculate drag and lift coefficient
     
     %CONVERT TO NORMAL AND TANGENTIAL FORCES
     Cn = (Cl*cos(phi))+(Cd*sin(phi)); % Normal force coefficient
-    Ct = (Cl*sin(phi))+(Cd*cos(phi)); % Tangential force coefficient
+    Ct = (Cl*sin(phi))-(Cd*cos(phi)); % Tangential force coefficient
     
     %CALCULATE NEW VALUES OF a/adash
     sigma = (B*Chord)/(2*pi()*y); %Calculating the solidity of the turbine.
     
     aNew = 1/(((4*sin(phi)^2)/(sigma*Cn))+1); % Calcualting the new value of a
-    adashNew = 1/(((4*sin(phi)*cos(phi))/(sigma*Ct))-1); % Calcualting the new value of adash
+    adashNew = 1/(((4*(sin(phi)*cos(phi))/(sigma*Ct))-1)); % Calcualting the new value of adash
     
     Error = abs(aNew-a)+abs(adashNew-adash); % Calculating the difference between the input and output values of a, adash
     
-    a = k*(aNew-a)+a;
-    adash = k*(adashNew-adash)+adash;
+    %a = k*(aNew-a)+a;
+    %adash = k*(adashNew-adash)+adash;
+    a=aNew;
+    adash=adashNew;
     
     loopCount = loopCount+1; % Increase the loop counter by 1
     
