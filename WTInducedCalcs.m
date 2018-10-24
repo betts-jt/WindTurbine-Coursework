@@ -8,6 +8,7 @@ tol = 0.0001; % Setting the tollerence required between the input and output val
 loopCount = 0; % Setting up a counter to count the numebr of loops
 Error = 10; % Setting up an initial error value to enable the loop to start
 k = 0.1; % Relaxation factor used in loop up avoid an unstable loop situation
+loopCountMax = 100; %Define the maximum numebr of loops permetted to stop infinate looping
 
 while Error > tol
     
@@ -40,5 +41,10 @@ while Error > tol
     adash = k*(adashNew-adash)+adash;
     
     loopCount = loopCount+1; % Increase the loop counter by 1
+    
+    if loopCount = loopCountMax %End the while loop if the maximum desired loops has been reached
+        break
+    end
+    
 end
 end
