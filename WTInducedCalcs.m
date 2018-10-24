@@ -20,7 +20,7 @@ while Error > tol
     % CALCULATE LIFT AND DRAG COEFFICIENTS
     mew = 1.81e-5; % Dynamic viscosity of air at 15oC. kg/ms
     rho = 1.225; % Density of air at 15oC. kg/m3
-    Vrel = ((V0*(1-a))^2+(omega*y*(1-adash)^2))^0.5; %Calculating the relative velociy of the airflow. m/s
+    Vrel = ((V0*(1-a))^2 + (omega*y*(1+adash))^2)^0.5 %Calculating the relative velociy of the airflow. m/s
     
     Re = (rho*Vrel*Chord)/mew; % Calculating the reynolds number.
     [Cl, Cd] = ForceCoefficient(alpha, Re); % Running function to calculate drag and lift coefficient
