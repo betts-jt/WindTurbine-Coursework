@@ -7,8 +7,10 @@ addpath('Lib'); %Add Lib folder to path to enable functions within that folder t
 tol = 0.0001; % Setting the tollerence required between the input and output value of a, adash to finish the optimisation
 loopCount = 0; % Setting up a counter to count the numebr of loops
 Error = 10; % Setting up an initial error value to enable the loop to start
+k = 0.1; % Relaxation factor used in loop up avoid an unstable loop situation
 
 while Error > tol
+    
     % CALCULATE THE RELEVENT ANGLES
     tanPhi = ((1-a)*V0)/((1+adash)*omega*y); % Calculate the flow angle
     phi = atan(tanPhi);% Flow angle. Degrees
@@ -33,7 +35,10 @@ while Error > tol
     adashNew = 1/(((4*sin(phi)*cos(phi))/(sigma*Ct))-1); % Calcualting the new value of adash
     
     Error = abs(aNew-a)+abs(adashNew-adash); % Calculating the difference between the input and output values of a, adash
-    a = aNew;
-    adash = adashNew;
+    
+    a = k*(aNew-a)+a;
+    adash = k*(adashNew-adash)+adash;
+    
+    loopCount = loopCount+1; % Increase the loop counter by 1
 end
 end
