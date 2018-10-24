@@ -42,7 +42,7 @@ while Error > tol
     
     loopCount = loopCount+1; % Increase the loop counter by 1
     
-    if loopCount = loopCountMax %End the while loop if the maximum desired loops has been reached
+    if loopCount == loopCountMax %End the while loop if the maximum desired loops has been reached
         break
     end
     
