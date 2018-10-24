@@ -8,8 +8,12 @@ tol = 0.0001; % Setting the tollerence required between the input and output val
 loopCount = 0; % Setting up a counter to count the numebr of loops
 Error = 10; % Setting up an initial error value to enable the loop to start
 k = 0.1; % Relaxation factor used in loop up avoid an unstable loop situation
+<<<<<<< master
 loopCountMax = 100; %Define the maximum numebr of loops permetted to stop infinate looping
 
+=======
+loopCountMax = 100; Define the maximum numebr of loops permetted to stop infinate looping.
+>>>>>>> master
 while Error > tol
     
     % CALCULATE THE RELEVENT ANGLES
@@ -20,7 +24,11 @@ while Error > tol
     % CALCULATE LIFT AND DRAG COEFFICIENTS
     mew = 1.81e-5; % Dynamic viscosity of air at 15oC. kg/ms
     rho = 1.225; % Density of air at 15oC. kg/m3
+<<<<<<< master
     Vrel = ((V0*(1-a))^2 + (omega*y*(1+adash))^2)^0.5 %Calculating the relative velociy of the airflow. m/s
+=======
+    Vrel = ((V0*(1-a))^2+(omega*y*(1-adash)^2))^0.5; %Calculating the relative velociy of the airflow. m/s
+>>>>>>> master
     
     Re = (rho*Vrel*Chord)/mew; % Calculating the reynolds number.
     [Cl, Cd] = ForceCoefficient(alpha, Re); % Running function to calculate drag and lift coefficient
@@ -42,7 +50,11 @@ while Error > tol
     
     loopCount = loopCount+1; % Increase the loop counter by 1
     
+<<<<<<< master
     if loopCount == loopCountMax %End the while loop if the maximum desired loops has been reached
+=======
+    if loopCount = loopCountMax %End the while loop if the maximum desired loops has been reached
+>>>>>>> master
         break
     end
     
