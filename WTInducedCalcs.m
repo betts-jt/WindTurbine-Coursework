@@ -45,7 +45,7 @@ while Error > tol
     elseif loopCount > loopCountMax % If loop count is above the desired maximum
         Error = abs(aNew-a); % Calculating the difference between the input and output values of a, adash
         a = k*(aNew-a)+a; % adding a relaxation factor to the value of a to help avoid an unstable loop
-        adash = 0;
+        adash = 0; %set adash to 0 if the maximum number of desired loopes has been exceeded
     elseif loopCount == 5*loopCountMax
         error('It has not been possible to calculate a value of a. Please change the input parameters and try again'); % Stop trying to find a or adash is 5 times the maximum desired loops has been reached to stop the code running infinetly
     end
