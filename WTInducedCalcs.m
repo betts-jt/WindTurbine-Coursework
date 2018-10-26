@@ -1,4 +1,4 @@
-function [aNew, adashNew, phi, Cn, Ct] = WTInducedCalcs(a, adash, V0, omega, y, theta, Chord, B, dispInducedResults)
+function [aNew, adashNew, phi, Cn, Ct] = WTInducedCalcs(a, adash, V0, omega, y, theta, Chord, B, Vrel)
 %1: SINGLE ELEMENT: use an iterative solution to find the values of a,
 %adash, phi, Cn and Ct at a particular radius.
 
@@ -24,7 +24,6 @@ while Error > tol
     % CALCULATE LIFT AND DRAG COEFFICIENTS
     mew = 1.81e-5; % Dynamic viscosity of air at 15oC. kg/ms
     rho = 1.225; % Density of air at 15oC. kg/m3
-    Vrel = ((V0*(1-a))^2 + (omega*y*(1+adash))^2)^0.5; %Calculating the relative velociy of the airflow. m/s
     
     Re = (rho*Vrel*Chord)/mew; % Calculating the reynolds number.
     [Cl, Cd] = ForceCoefficient(alpha, Re); % Running function to calculate drag and lift coefficient
@@ -53,14 +52,4 @@ while Error > tol
     loopCount = loopCount+1; % Increase the loop counter by 1
 end
 
-%DISPLAY THE RESULTS OF THE AVOBE CALUCLATIONS
-if dispInducedResults == 1 % Show the results if the requested
-    T = table(a, adash, phi, Cn, Ct); %Generate a Table of the results from the induced calcualtions
-    figure
-    uitable('Data',T{:,:},'ColumnName',T.Properties.VariableNames, 'RowName',T.Properties.RowNames,'Units', 'Normalized', 'Position',[0, 0, 1, 1]); % Generate a Figure containing the table of results
-elseif dispInducedResults == 0  % Do not show the results if the requested
-    return
-else
-    error('Enter either 1 to show results of the Induced calculations or 0 to hide the results when calling the main function') % show an error is neither a 0 or 1 were entered in the dispInducedResults variable
-end
 end
