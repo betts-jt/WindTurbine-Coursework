@@ -63,5 +63,4 @@ elseif dispInducedResults == 0  % Do not show the results if the requested
 else
     error('Enter either 1 to show results of the Induced calculations or 0 to hide the results when calling the main function') % show an error is neither a 0 or 1 were entered in the dispInducedResults variable
 end
-loopCount
 end
