@@ -16,9 +16,6 @@ sigma = (B*Chord)/(2*pi()*y); %Calculating the solidity of the turbine.
 
 while Error > tol
     
-    a = k*(aNew-a)+a; % adding a relaxation factor to the value of a to help avoid an unstable loop
-    adash = k*(adashNew-adash)+adash; % adding a relaxation factor to the value of adash to help avoid an unstable loop
-    
     % CALCULATE THE RELEVENT ANGLES
     tanPhi = ((1-a)*V0)/((1+adash)*omega*y); % Calculate the flow angle
     phi = atan(tanPhi);% Flow angle. Degrees
@@ -43,8 +40,12 @@ while Error > tol
     
     if loopCount < loopCountMax %If loop count is less than the desired maximum
         Error = abs(aNew-a)+abs(adashNew-adash); % Calculating the difference between the input and output values of a, adash
+        a = k*(aNew-a)+a; % adding a relaxation factor to the value of a to help avoid an unstable loop
+        adash = k*(adashNew-adash)+adash; % adding a relaxation factor to the value of adash to help avoid an unstable loop
     elseif loopCount > loopCountMax % If loop count is above the desired maximum
         Error = abs(aNew-a); % Calculating the difference between the input and output values of a, adash
+        a = k*(aNew-a)+a; % adding a relaxation factor to the value of a to help avoid an unstable loop
+        adash = 0;
     elseif loopCount == 5*loopCountMax
         error('It has not been possible to calculate a value of a. Please change the input parameters and try again'); % Stop trying to find a or adash is 5 times the maximum desired loops has been reached to stop the code running infinetly
     end
@@ -62,5 +63,5 @@ elseif dispInducedResults == 0  % Do not show the results if the requested
 else
     error('Enter either 1 to show results of the Induced calculations or 0 to hide the results when calling the main function') % show an error is neither a 0 or 1 were entered in the dispInducedResults variable
 end
-
+loopCount
 end
