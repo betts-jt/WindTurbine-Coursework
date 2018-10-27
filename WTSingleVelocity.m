@@ -17,6 +17,7 @@ N = 20; % The total numebr of sections acros the balde span to be analysed
 span = TipRadius-RootRadius; %Total Legnth of Blade
 deltay = span/(N-1); %Change in span between sections
 y(1:N-1) = [RootRadius+deltay/2:deltay:TipRadius-deltay/2]; % Generate N points along the blade as values of span
+BladeArea = pi()*TipRadius^2; % Calcualte the swept area of the blades
 
 %RUN THE INDUCED VELOCITY CALCULATION FOR ALL POINTS ON SPAN
 for i=1:N-1
@@ -32,5 +33,8 @@ Mtott = sum(Mt); % Caluclate the total bending moment due to torque ofthe blade
 Mntot = sum(Mn); % Calcualte the total root bending moment of the blade
 
 Power = Mtott*B*omega; %Calcualte the power generated due to the torque
+PowerCoeff = Power/(0.5*rho*V0^3*BladeArea); %Calculate the power coefficient of the blade.
+Diff = (16/27) - PowerCoeff; % Calculate the difference between the blade analysed and the Betz power limit of 16/27
+
 
 end
