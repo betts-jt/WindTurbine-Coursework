@@ -31,5 +31,6 @@ Mn = (0.5*rho.*Vrel.^2.*Chord.*Cn)*deltay.*y; % Calcualte the moment due to root
 Mtott = sum(Mt); % Caluclate the total bending moment due to torque ofthe blade 
 Mntot = sum(Mn); % Calcualte the total root bending moment of the blade
 
+Power = Mtott*B*omega; %Calcualte the power generated due to the torque
 
 end
