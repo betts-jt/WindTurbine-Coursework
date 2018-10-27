@@ -16,13 +16,21 @@ end
 
 %RUN THE LEVEL 2 SINGLE VELOCITY CODE IF DESIRED
 if RunL2 == 1
-    [MT, MN] = WTSingleVelocity(20, 0.209, -0.00698, 1, 0, 20 ,1, 3.1416, 3);
+    [Mt, Mn, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(20, 0.209, -0.00698, 1, 0, 20 ,1, 3.1416, 3);
     %DISPLAY THE RESULTS OF THE ABOVE CALUCLATIONS
-    %{
-    T = table(a, adash, phi, Cn, Ct); %Generate a Table of the results from the induced calcualtions
-    figure(1)
+    y=y';
+    a_out=a_out';
+    adash_out=adash_out';
+    phi=phi';
+    Cn=Cn';
+    Ct=Ct';
+    T = table(y, a_out, adash_out, phi, Cn, Ct); %Generate a Table of the results from the single velocity calculations
+    figure(2)
     uitable('Data',T{:,:},'ColumnName',T.Properties.VariableNames, 'RowName',T.Properties.RowNames,'Units', 'Normalized', 'Position',[0, 0, 1, 1]); % Generate a Figure containing the table of results
-    %}
+    Mt=Mt'; 
+    T = table(y, Mt); %Generate a Table of the results from the single velocity calculations
+    figure(3)
+    uitable('Data',T{:,:},'ColumnName',T.Properties.VariableNames, 'RowName',T.Properties.RowNames,'Units', 'Normalized', 'Position',[0, 0, 1, 1]); % Generate a Figure containing the table of results
 else
 end
 
