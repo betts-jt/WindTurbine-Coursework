@@ -16,7 +16,7 @@ end
 
 %RUN THE LEVEL 2 SINGLE VELOCITY CODE IF DESIRED
 if RunL2 == 1
-    [Mt, Mn, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(20, 0.209, -0.00698, 1, 0, 20 ,1, 3.1416, 3);
+    [Mt, Mn, Power, Diff y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(20, 0.209, -0.00698, 1, 0, 20 ,1, 3.1416, 3);
     %DISPLAY THE RESULTS OF THE ABOVE CALUCLATIONS
     y=y';
     a_out=a_out';
