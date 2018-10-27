@@ -16,22 +16,24 @@ B = 3;
 
 % SET INITIAL VARIABLES FOR CALCULATION
 Interval = 1; %Setting the spacing between the min and max V0 to analyse
-Theta0 = 0.209;
-ThetaTwist = -0.00698;
+Theta0 = deg2rad(12);
+ThetaTwist = deg2rad(-0.4);
 ChordGrad = 0;
 
 V=[MinV0:Interval:MaxV0];
 Vhalf = [MinV0+Interval/2:Interval:MaxV0-Interval/2];
 
-parfor i=1:length(V)-1; % Run a parallal processing for loop
-f(i) = exp(-(V(i)/A)^k)-exp(-(V(i+1)/A)^k);
+
+parfor i=1:length(V); % Run a parallal processing for loop
 [Mt, Mn,Power(i), Diff(i), y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B);
 end
 
 for i=1:length(V)-1;
-AEP(i) = sum(0.5*(Power(i))+Power(i+1))*f(i)*8760;
+    f(i) = exp(-(V(i)/A)^k)-exp(-(V(i+1)/A)^k);
+    AEP(i) = sum(0.5*(Power(i))+Power(i+1))*f(i)*8760;
 end
 
+T = table(Vhalf', AEP', f')
 
 end
 
