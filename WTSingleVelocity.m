@@ -6,10 +6,6 @@ function [Mt, Mn] = WTSingleVelocity(V0, Theta0, ThetaTwist, MeanChord, ChordGra
 %INITIAL VARIABLES
 a = 0; % Initial value of a dash used in Induced Calculatiuons
 adash = 0; %Initial value of a dash used in Induced Calculatiuons
-omega = 3.141593; % Initial tip velocity
-V0 = 20; % Initial velocity of wind perpendicular to turbine
-Chord0 = 1; % Mean chord legnth of turbine blade
-B = 3; % Number of turbine blades
 rho = 1.225; % Densiy of air
 
 % SETTING UP VALUES FOR FULL RADIUS CALCULATIONS
@@ -22,7 +18,7 @@ BladeArea = pi()*TipRadius^2; % Calcualte the swept area of the blades
 %RUN THE INDUCED VELOCITY CALCULATION FOR ALL POINTS ON SPAN
 for i=1:N-1
     ThetaR(i) = Theta0+y(i)*ThetaTwist; % Calcualte the value of twist at the particular point on the blades span
-    Chord(i) = Chord0 + ((y(i)-(TipRadius/2))*ChordGrad); % Calcualte the value of chord legnth at the particular point on the blades span
+    Chord(i) = MeanChord + ((y(i)-(TipRadius/2))*ChordGrad); % Calcualte the value of chord legnth at the particular point on the blades span
     [a_out(i), adash_out(i), phi(i), Cn(i), Ct(i), Vrel(i)] = WTInducedCalcs(a, adash, V0, omega, y(i), ThetaR(i), Chord(i), B); % Run the induceed calculations at a specific poinot on the blade
 end
 
