@@ -20,9 +20,9 @@ y(1:N-1) = [RootRadius+deltay/2:deltay:TipRadius-deltay/2]; % Generate N points 
 
 %RUN THE INDUCED VELOCITY CALCULATION FOR ALL POINTS ON SPAN
 for i=1:N-1
-    ThetaR = Theta0+y(i)*ThetaTwist;
-    Chord(i) = Chord0 + (y(i)-(TipRadius/2))*ChordGrad);
-    [a_out(i), adash_out(i), phi(i), Cn(i), Ct(i), Vrel(i)] = WTInducedCalcs(a, adash, V0, omega, y(i), ThetaR, Chord, B);
+    ThetaR(i) = Theta0+y(i)*ThetaTwist;
+    Chord(i) = Chord0 + ((y(i)-(TipRadius/2))*ChordGrad);
+    [a_out(i), adash_out(i), phi(i), Cn(i), Ct(i), Vrel(i)] = WTInducedCalcs(a, adash, V0, omega, y(i), ThetaR(i), Chord(i), B);
 end
 
 Mt = (0.5*rho.*Vrel.^2.*Chord.*Ct)*deltay.*y;
