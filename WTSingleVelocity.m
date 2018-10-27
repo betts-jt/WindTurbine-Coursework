@@ -8,8 +8,7 @@ a = 0; % Initial value of a dash used in Induced Calculatiuons
 adash = 0; %Initial value of a dash used in Induced Calculatiuons
 omega = 3.141593; % Initial tip velocity
 V0 = 20; % Initial velocity of wind perpendicular to turbine
-theta = 0.0733; % 
-Chord = 1; % Chord legnth of turbing blade
+Chord0 = 1; % Mean chord legnth of turbine blade
 B = 3; % Number of turbine blades
 rho = 1.225; % Densiy of air
 
@@ -21,11 +20,12 @@ y(1:N-1) = [RootRadius+deltay/2:deltay:TipRadius-deltay/2]; % Generate N points 
 
 %RUN THE INDUCED VELOCITY CALCULATION FOR ALL POINTS ON SPAN
 for i=1:N-1
-    [a_out(i), adash_out(i), phi(i), Cn(i), Ct(i), Vrel(i)] = WTInducedCalcs(a, adash, V0, omega, y(i), theta, Chord, B);
+    ThetaR = Theta0+y(i)*ThetaTwist;
+    Chord(i) = Chord0 + (y(i)-(TipRadius/2))*ChordGrad);
+    [a_out(i), adash_out(i), phi(i), Cn(i), Ct(i), Vrel(i)] = WTInducedCalcs(a, adash, V0, omega, y(i), ThetaR, Chord, B);
 end
 
-Mt = (0.5*rho.*Vrel.^2*Chord.*Ct)*deltay.*y;
-MtSUM = sum(Mt)
-Mn = (0.5*rho.*Vrel.^2*Chord.*Cn)*deltay.*y;
+Mt = (0.5*rho.*Vrel.^2.*Chord.*Ct)*deltay.*y;
+Mn = (0.5*rho.*Vrel.^2.*Chord.*Cn)*deltay.*y;
 
 end
