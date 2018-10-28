@@ -18,7 +18,7 @@ end
 if RunL2 == 1
     V0 = 20;
     
-    [Mt, Mn, Power, Diff y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, 0.209, -0.00698, 1, 0, 20 ,1, 3.1416, 3, 1.2566e+03);
+    [Mt, Mn, Power, Diff y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, 0.209, -0.00698, 1, 0, 20 ,1, 3.1416, 3, 1.2566e+03, 1.225);
     %DISPLAY THE RESULTS OF THE ABOVE CALUCLATIONS
     disp(['The power generated at windspeed ', num2str(V0), ' was ', num2str(Power)]);
     y=y';
