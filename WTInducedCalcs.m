@@ -2,7 +2,7 @@ function [aNew, adashNew, phi, Cn, Ct, Vrel] = WTInducedCalcs(a, adash, V0, omeg
 %1: SINGLE ELEMENT: use an iterative solution to find the values of a,
 %adash, phi, Cn and Ct at a particular radius.
 
-addpath('Lib'); %Add Lib folder to path to enable functions within that folder to be used in this function
+
 
 tol = 0.0001; % Setting the tollerence required between the input and output value of a, adash to finish the optimisation
 loopCount = 0; % Setting up a counter to count the numebr of loops
@@ -47,6 +47,7 @@ while Error > tol
         a = k*(aNew-a)+a; % adding a relaxation factor to the value of a to help avoid an unstable loop
         adash = 0; %set adash to 0 if the maximum number of desired loopes has been exceeded
     elseif loopCount == 5*loopCountMax
+        break
         error('It has not been possible to calculate a value of a. Please change the input parameters and try again'); % Stop trying to find a or adash is 5 times the maximum desired loops has been reached to stop the code running infinetly
     end
     

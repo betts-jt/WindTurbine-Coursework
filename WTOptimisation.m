@@ -1,4 +1,5 @@
 function [] = WTOptimisation(Initial, Lb, Ub)
+addpath('Lib'); %Add Lib folder to path to enable functions within that folder to be used in this function
 %4: OPTIMISATION - use fminsearchbnd to optimise theta0, thetatw, and cgrad for
 %maximum AEP.
     % Initial, Lb & Ub are both arrays of 3 numbers with Initial being the
