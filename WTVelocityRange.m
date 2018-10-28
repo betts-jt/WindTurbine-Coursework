@@ -1,4 +1,4 @@
-function [Diff Vhalf, Power2, BetzPower AEPV, f, AEP] = WTVelocityRange(Parameters, A, k, omega, MeanChord, TipRadius, RootRadius, B, MinV0, MaxV0)
+function [Diff, Vhalf, Power2, BetzPower, AEPV, f, AEP] = WTVelocityRange(Parameters, A, k, omega, MeanChord, TipRadius, RootRadius, B, MinV0, MaxV0)
 
 %3: ANNUAL ENERGY - loop WTSingleVelocity to find the moments across the
 %entire velocity range. Combine this with the frequency information to get
@@ -16,7 +16,7 @@ V=[MinV0:Interval:MaxV0];
 Vhalf = [MinV0+Interval/2:Interval:MaxV0-Interval/2];
 
 parfor i=1:length(V); % Run a parallal processing for loop
-    [Mt, Mn,Power(i), Diff(i), y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
+    [Mt, Mn,Power(i), y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
 
 end
 
@@ -28,6 +28,8 @@ for i=1:length(V)-1;
 end
 
 AEP = sum(AEPV);
+BAEP = sum(BetzPower);
+Diff =BAEP-AEP;
 
 end
 
