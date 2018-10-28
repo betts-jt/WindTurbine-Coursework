@@ -42,6 +42,7 @@ if RunL3 == 1
     [~, Vhalf, Power2, BetzPower, AEPV, f, AEP] =  WTVelocityRange([12*pi/180 -0.4*pi/180 0], 7, 1.8, 3.14, 1, 20, 1, 3, 5, 25);
     % CODE TO OUTPUT RESULTS DELETE WHEN ADDED TO FUNCTION TEST
     disp(['The AEP of the blade is ', num2str(AEP)])
+    disp(['The BAEP of the blade is ', num2str(sum(BetzPower))])
     Vhalf = Vhalf';
     AEPV = AEPV';
     f = f';
