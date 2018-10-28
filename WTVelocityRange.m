@@ -1,4 +1,5 @@
 function [Diff Vhalf, Power2, BetzPower AEP, f] = WTVelocityRange(Parameters, A, k, omega, MeanChord, TipRadius, RootRadius, B, MinV0, MaxV0)
+
 %3: ANNUAL ENERGY - loop WTSingleVelocity to find the moments across the
 %entire velocity range. Combine this with the frequency information to get
 %the AEP.
@@ -22,18 +23,18 @@ end
 toc
 
 for i=1:length(V)-1;
-    f(i) = exp(-(V(i)/A)^k)-exp(-(V(i+1)/A)^k);
-    Power2(i) = (0.5*(Power(i)+Power(i+1)));
-    AEP(i) = sum(0.5*(Power(i))+Power(i+1))*f(i)*8760;
-    BetzPower(i) = (16/27)*(0.5*rho*Vhalf(i)^3*BladeArea);
+    f(i) = exp(-(V(i)/A)^k)-exp(-(V(i+1)/A)^k); % Calcualte the prabobability distribution for wind speeds
+    Power2(i) = (0.5*(Power(i)+Power(i+1))); % Calculate the power at heach value of Vhalf using the trapezium rule
+    AEP(i) = sum(0.5*(Power(i))+Power(i+1))*f(i)*8760;  % Calcualte the anual energy  production using the trapezium rule
+    BetzPower(i) = (16/27)*(0.5*rho*Vhalf(i)^3*BladeArea); % Calcualte the ideal power generated at each windspeed using the Betz limit
 end
 
+% CODE TO OUTPUT RESULTS DELETE WHEN ADDED TO FUNCTION TEST
 Vhalf = Vhalf';
 AEP = AEP';
 f = f';
 Power2 = Power2';
 BetzPower = BetzPower';
-
 T = table(Vhalf, Power2, BetzPower, AEP, f)
 
 end
