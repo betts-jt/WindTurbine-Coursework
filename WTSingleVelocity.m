@@ -1,4 +1,4 @@
-function [Mt, Mn,Power, Diff, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho)
+function [Mt, Mn,Power, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho)
 %2: WHOLE ROTOR - loop WTInducedCalcs to find the values for all radii,
 %then integrate these to get the normal and tangential moment at the blade
 %root.
@@ -28,7 +28,6 @@ Mntot = sum(Mn); % Calcualte the total root bending moment of the blade
 
 Power = Mtott*B*omega; %Calcualte the power generated due to the torque
 PowerCoeff = Power/(0.5*rho*V0^3*BladeArea); %Calculate the power coefficient of the blade.
-Diff = (16/27) - PowerCoeff; % Calculate the difference between the blade analysed and the Betz power limit of 16/27
 
 
 end
