@@ -1,4 +1,4 @@
-function [Mt, Mn,Power, Diff, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B)
+function [Mt, Mn,Power, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho)
 %2: WHOLE ROTOR - loop WTInducedCalcs to find the values for all radii,
 %then integrate these to get the normal and tangential moment at the blade
 %root.
@@ -6,14 +6,12 @@ function [Mt, Mn,Power, Diff, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVeloci
 %INITIAL VARIABLES
 a = 0; % Initial value of a dash used in Induced Calculatiuons
 adash = 0; %Initial value of a dash used in Induced Calculatiuons
-rho = 1.225; % Densiy of air
 
 % SETTING UP VALUES FOR FULL RADIUS CALCULATIONS
 N = 20; % The total numebr of sections acros the balde span to be analysed
 span = TipRadius-RootRadius; %Total Legnth of Blade
 deltay = span/(N-1); %Change in span between sections
 y(1:N-1) = [RootRadius+deltay/2:deltay:TipRadius-deltay/2]; % Generate N points along the blade as values of span
-BladeArea = pi()*TipRadius^2; % Calcualte the swept area of the blades
 
 %RUN THE INDUCED VELOCITY CALCULATION FOR ALL POINTS ON SPAN
 for i=1:N-1
@@ -30,7 +28,6 @@ Mntot = sum(Mn); % Calcualte the total root bending moment of the blade
 
 Power = Mtott*B*omega; %Calcualte the power generated due to the torque
 PowerCoeff = Power/(0.5*rho*V0^3*BladeArea); %Calculate the power coefficient of the blade.
-Diff = (16/27) - PowerCoeff; % Calculate the difference between the blade analysed and the Betz power limit of 16/27
 
 
 end
