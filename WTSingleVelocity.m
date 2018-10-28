@@ -1,4 +1,4 @@
-function [Mt, Mn,Power, Diff, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B)
+function [Mt, Mn,Power, Diff, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea)
 %2: WHOLE ROTOR - loop WTInducedCalcs to find the values for all radii,
 %then integrate these to get the normal and tangential moment at the blade
 %root.
@@ -13,7 +13,6 @@ N = 20; % The total numebr of sections acros the balde span to be analysed
 span = TipRadius-RootRadius; %Total Legnth of Blade
 deltay = span/(N-1); %Change in span between sections
 y(1:N-1) = [RootRadius+deltay/2:deltay:TipRadius-deltay/2]; % Generate N points along the blade as values of span
-BladeArea = pi()*TipRadius^2; % Calcualte the swept area of the blades
 
 %RUN THE INDUCED VELOCITY CALCULATION FOR ALL POINTS ON SPAN
 for i=1:N-1
