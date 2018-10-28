@@ -24,7 +24,7 @@ for i=1:length(V)-1;
     f(i) = exp(-(V(i)/A)^k)-exp(-(V(i+1)/A)^k); % Calcualte the prabobability distribution for wind speeds
     Power2(i) = (0.5*(Power(i)+Power(i+1))); % Calculate the power at heach value of Vhalf using the trapezium rule
     AEPV(i) = 0.5*(Power(i)+Power(i+1))*f(i)*8760;  % Calcualte the anual energy  production using the trapezium rule
-    BetzPower(i) = (16/27)*(0.5*rho*Vhalf(i)^3*BladeArea); % Calcualte the ideal power generated at each windspeed using the Betz limit
+    BetzPower(i) = (16/27)*(0.5*rho*Vhalf(i)^3*BladeArea)*f(i)*8760; % Calcualte the ideal power generated at each windspeed using the Betz limit
 end
 
 AEP = sum(AEPV);
