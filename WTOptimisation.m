@@ -1,4 +1,4 @@
-function [] = WTOptimisation(Initial, Lb, Ub)
+function [x] = WTOptimisation(Initial, Lb, Ub)
 addpath('Lib'); %Add Lib folder to path to enable functions within that folder to be used in this function
 %4: OPTIMISATION - use fminsearchbnd to optimise theta0, thetatw, and cgrad for
 %maximum AEP.
@@ -23,7 +23,7 @@ opts = optimset('fminsearch');
 opts.Display = 'iter'; %What to display in command window
 opts.TolX = 0.0001; %Tolerance on the variation in the parameters
 opts.TolFun = 0.001; %Tolerance on the error
-opts.MaxIter = 5; %Max number of iterations
+opts.MaxIter = 10; %Max number of iterations
 
 [x, diff, exitflag] = fminsearchbnd(@DiffCost, [deg2rad(2.5) deg2rad(-1) 0.3], [deg2rad(2) deg2rad(-2) 0], [deg2rad(20) deg2rad(-0.1) 0.9], opts);
 
