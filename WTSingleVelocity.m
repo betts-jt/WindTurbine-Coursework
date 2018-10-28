@@ -1,4 +1,4 @@
-function [Mt, Mn,Power, Diff, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea)
+function [Mt, Mn,Power, Diff, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho)
 %2: WHOLE ROTOR - loop WTInducedCalcs to find the values for all radii,
 %then integrate these to get the normal and tangential moment at the blade
 %root.
@@ -6,7 +6,6 @@ function [Mt, Mn,Power, Diff, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVeloci
 %INITIAL VARIABLES
 a = 0; % Initial value of a dash used in Induced Calculatiuons
 adash = 0; %Initial value of a dash used in Induced Calculatiuons
-rho = 1.225; % Densiy of air
 
 % SETTING UP VALUES FOR FULL RADIUS CALCULATIONS
 N = 20; % The total numebr of sections acros the balde span to be analysed
