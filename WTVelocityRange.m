@@ -15,7 +15,7 @@ BladeArea = pi()*(TipRadius^2-RootRadius); % Calcualte the swept area of the bla
 V=[MinV0:Interval:MaxV0];
 Vhalf = [MinV0+Interval/2:Interval:MaxV0-Interval/2];
 
-for i=1:length(V); % Run a parallal processing for loop
+parfor i=1:length(V); % Run a parallal processing for loop
     [Mt, Mn,Power(i), y, a_out, adash_out, phi, Cn, Ct, Chord] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
 end
 
