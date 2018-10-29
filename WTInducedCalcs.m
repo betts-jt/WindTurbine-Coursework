@@ -43,7 +43,7 @@ while Error > tol
         Error = abs(aNew-a)+abs(adashNew-adash); % Calculating the difference between the input and output values of a, adash
         a = k*(aNew-a)+a; % adding a relaxation factor to the value of a to help avoid an unstable loop
         adash = k*(adashNew-adash)+adash; % adding a relaxation factor to the value of adash to help avoid an unstable loop
-    elseif loopCount > loopCountMax && loopCount < loopCountMax % If loop count is above the desired maximum
+    elseif loopCount > loopCountMax && loopCount < 2*loopCountMax % If loop count is above the desired maximum
         Error = abs(aNew-a); % Calculating the difference between the input and output values of a, adash
         a = k*(aNew-a)+a; % adding a relaxation factor to the value of a to help avoid an unstable loop
         adash = 0; %set adash to 0 if the maximum number of desired loopes has been exceeded
