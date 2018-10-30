@@ -18,6 +18,7 @@ for i=1:N-1
     ThetaR(i) = Theta0+y(i)*ThetaTwist; % Calcualte the value of twist at the particular point on the blades span
     Chord(i) = MeanChord + ((y(i)-((TipRadius-RootRadius)/2))*ChordGrad); % Calcualte the value of chord legnth at the particular point on the blades span
     [a_out(i), adash_out(i), phi(i), Cn(i), Ct(i), Vrel(i)] = WTInducedCalcs(a, adash, V0, omega, y(i), ThetaR(i), Chord(i), B); % Run the induceed calculations at a specific poinot on the blade
+    EIPoint(i) = 40e9*((Chord(i)*(0.2*Chord(i))^3)/12); % Calculate the approximate value of blade stiffness for each Chord section
 end
 
 Mt = (0.5*rho.*Vrel.^2.*Chord.*Ct)*deltay.*y; % Calcualte the moment due to torque at all points of the blade
