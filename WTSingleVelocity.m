@@ -40,8 +40,4 @@ Mntot = sum(Mn); % Calcualte the total root bending moment of the blade
 
 Power = Mttot*B*omega; %Calcualte the power generated due to the torque
 
-if deltaX_total >3
-    disp('hight blade bending')
-end
-
 end
