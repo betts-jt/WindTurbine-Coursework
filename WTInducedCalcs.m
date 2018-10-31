@@ -7,10 +7,10 @@ function [aNew, adashNew, phi, Cn, Ct, Vrel] = WTInducedCalcs(a, adash, V0, omeg
 tol = 0.0001;; % Setting the tollerence required between the input and output value of a, adash to finish the optimisation
 loopCount = 0; % Setting up a counter to count the numebr of loops
 Error = 10; % Setting up an initial error value to enable the loop to start
-k = 0.1; % Relaxation factor used in loop up avoid an unstable loop situation
 loopCountMax = 500; %Define the maximum numebr of loops permetted whilst solving for both a and adash to stop infinate looping
 aNew = 0; % Setting the value a aNew to zero for the first loop
 adashNew = 0; % Setting the value a adashNew to zero for the first loop
+relaxationLoop = 50; % Loop count at which the relaxation factor is implemented
 
 sigma = (B*Chord)/(2*pi()*y); %Calculating the solidity of the turbine.
 
@@ -40,10 +40,24 @@ while Error > tol
     
     
     if loopCount < loopCountMax %If loop count is less than the desired maximum
+        
+        if(loopCount<relaxationLoop)
+            k=1; % For low loopcounts set relaxation factor to one and dont use
+        else
+            k=0.1; % For higher loopcounts set relaxation factor to 0.1 and start to implement to improve stability.
+        end
+   
         Error = abs(aNew-a)+abs(adashNew-adash); % Calculating the difference between the input and output values of a, adash
         a = k*(aNew-a)+a; % adding a relaxation factor to the value of a to help avoid an unstable loop
         adash = k*(adashNew-adash)+adash; % adding a relaxation factor to the value of adash to help avoid an unstable loop
     elseif loopCount > loopCountMax && loopCount < 2*loopCountMax % If loop count is above the desired maximum
+        if(loopCount<loopCountMax+relaxationLoop)
+            
+            k=1; % For low loopcounts set relaxation factor to one and dont use
+        else
+            k=0.1; % For higher loopcounts set relaxation factor to 0.1 and start to implement to improve stability.
+        end
+        
         Error = abs(aNew-a); % Calculating the difference between the input and output values of a, adash
         a = k*(aNew-a)+a; % adding a relaxation factor to the value of a to help avoid an unstable loop
         adash = 0; %set adash to 0 if the maximum number of desired loopes has been exceeded
