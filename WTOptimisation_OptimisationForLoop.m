@@ -20,7 +20,7 @@ end
 
 [Diff_final,Diff_pos]=min(diff);
 x_Final = x(Diff_pos,:);
-
+x_Final=[rad2deg(x_Final(1)) rad2deg(x_Final(2)) x_Final(3)];
 
 
 end
