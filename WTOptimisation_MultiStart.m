@@ -13,6 +13,6 @@ problem = createOptimProblem('fmincon','objective',...
     @DiffCost,'x0',[deg2rad(2.5) deg2rad(-1) 0],'lb',[deg2rad(2) deg2rad(-2) -0.1],'ub',[deg2rad(20) deg2rad(-0.1) 0.1],'options',opts);
 ms = MultiStart;
 
-[x,f] = run(ms,problem,50);
+[x,~] = run(ms,problem,50);
 x_Final=[rad2deg(x(1)) rad2deg(x(2)) x(3)];
 end
