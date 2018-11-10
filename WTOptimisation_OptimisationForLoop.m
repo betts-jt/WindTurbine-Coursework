@@ -8,7 +8,7 @@ opts = optimset('fminsearch');
 opts.Display = 'iter'; %What to display in command window
 opts.TolX = 0.0001; %Tolerance on the variation in the parameters
 opts.TolFun = 0.001; %Tolerance on the error
-opts.MaxIter = 10; %Max number of iterations
+opts.MaxIter = 100; %Max number of iterations
 
 Theta0 = [2:((20-2)/9):20];
 ThetaTW = [-2:(-0.1--2)/9:-0.1];
