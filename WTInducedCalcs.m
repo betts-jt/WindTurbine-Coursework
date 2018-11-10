@@ -1,10 +1,9 @@
-function [aNew, adashNew, phi, Cn, Ct, Vrel] = WTInducedCalcs(a, adash, V0, omega, y, theta, Chord, B)
+function [aNew, adashNew, phi, Cn, Ct, Vrel] = WTInducedCalcs(a, adash, V0, omega, y, theta, Chord, B, TipRadius)
 %1: SINGLE ELEMENT: use an iterative solution to find the values of a,
 %adash, phi, Cn and Ct at a particular radius.
 
 
-
-tol = 0.0001;; % Setting the tollerence required between the input and output value of a, adash to finish the optimisation
+tol = 0.0001; % Setting the tollerence required between the input and output value of a, adash to finish the optimisation
 loopCount = 0; % Setting up a counter to count the numebr of loops
 Error = 10; % Setting up an initial error value to enable the loop to start
 loopCountMax = 500; %Define the maximum numebr of loops permetted whilst solving for both a and adash to stop infinate looping
@@ -21,6 +20,10 @@ while Error > tol
     phi = atan(tanPhi);% Flow angle. Degrees
     alpha = phi-theta; % Calculate the angle of attack. Degrees
     
+    % CALCUALTE TIP LOSSES
+    f=(B*(TipRadius-y))/(2*y*sin(phi));
+    F=(2/pi)*acos(exp(-f));
+    
     % CALCULATE LIFT AND DRAG COEFFICIENTS
     mew = 1.81e-5; % Dynamic viscosity of air at 15oC. kg/ms
     rho = 1.225; % Density of air at 15oC. kg/m3
@@ -34,9 +37,8 @@ while Error > tol
     Ct = (Cl*sin(phi))-(Cd*cos(phi)); % Tangential force coefficient
     
     %CALCULATE NEW VALUES OF a/adash
-    aNew = 1/(((4*((sin(phi))^2))/(sigma*Cn))+1); % Calcualting the new value of a
-    
-    adashNew = 1/(((4*(sin(phi)*cos(phi)))/(sigma*Ct))-1); % Calcualting the new value of adash
+    aNew = 1/(((4*F*((sin(phi))^2))/(sigma*Cn))+1); % Calcualting the new value of a
+    adashNew = 1/(((4*F*(sin(phi)*cos(phi)))/(sigma*Ct))-1); % Calcualting the new value of adash
     
     
     if loopCount < loopCountMax %If loop count is less than the desired maximum
