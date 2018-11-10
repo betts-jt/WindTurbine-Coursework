@@ -29,7 +29,8 @@ Local_Force = Mn./y; % Calcualting the normal force on the blade at each point
 
 %Total_Force = sum(Local_Force)
 
-for i=1:N-1
+% CALAUT THE DIFLECTION
+for i=1:N-1 % Calculate the local deflection at the points.
     deltaX_local(i) = ((Local_Force(i)*y(i)^2)/(24*EIPoint(i)*span))*((2*span^2)+(2*span-y(i))^2); %Calculating the local deflection due to normal force at each point of the blade
 end
 
