@@ -14,5 +14,5 @@ problem = createOptimProblem('fmincon','objective',...
 ms = MultiStart;
 
 [x,~] = run(ms,problem,50);
-x_Final=[rad2deg(x(1)) rad2deg(x(2)) x(3)];
+x=[rad2deg(x(1)) rad2deg(x(2)) x(3)];
 end
