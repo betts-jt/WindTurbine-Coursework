@@ -28,7 +28,7 @@ while Error > tol
     mew = 1.81e-5; % Dynamic viscosity of air at 15oC. kg/ms
     rho = 1.225; % Density of air at 15oC. kg/m3
     Vrel = ((V0*(1-a))^2 + (omega*y*(1+adash))^2)^0.5; %Calculating the relative velociy of the airflow. m/s
-    
+
     Re = (rho*Vrel*Chord)/mew; % Calculating the reynolds number.
     [Cl, Cd] = ForceCoefficient(alpha, Re); % Running function to calculate drag and lift coefficient
     
@@ -48,7 +48,7 @@ while Error > tol
         else
             k=0.1; % For higher loopcounts set relaxation factor to 0.1 and start to implement to improve stability.
         end
-   
+        
         Error = abs(aNew-a)+abs(adashNew-adash); % Calculating the difference between the input and output values of a, adash
         a = k*(aNew-a)+a; % adding a relaxation factor to the value of a to help avoid an unstable loop
         
@@ -57,6 +57,12 @@ while Error > tol
         end
         
         adash = k*(adashNew-adash)+adash; % adding a relaxation factor to the value of adash to help avoid an unstable loop
+        
+        if adash<0 % Check if the value of adash is less
+            %disp(num2str(adash))
+            adash=0; % Set the value to 0 to avoide NaN answers
+        end
+        
     elseif loopCount > loopCountMax && loopCount < 2*loopCountMax % If loop count is above the desired maximum
         if(loopCount<loopCountMax+relaxationLoop)
             
