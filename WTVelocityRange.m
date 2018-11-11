@@ -15,11 +15,11 @@ BladeArea = pi()*(TipRadius^2-RootRadius); % Calcualte the swept area of the bla
 V=[MinV0:Interval:MaxV0];
 Vhalf = [MinV0+Interval/2:Interval:MaxV0-Interval/2];
 
-parfor i=1:length(V); % Run a parallal processing for loop
+parfor i=1:length(V) % Run a parallal processing for loop
     [Mttot, Mntot(i),deltaX_total(i),Power(i), y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
 end
 
-for i=1:length(V)-1;
+for i=1:length(V)-1
     f(i) = exp(-(V(i)/A)^k)-exp(-(V(i+1)/A)^k); % Calcualte the prabobability distribution for wind speeds
     Power2(i) = (0.5*(Power(i)+Power(i+1))); % Calculate the power at each value of Vhalf using the trapezium rule
     AEPV(i) = Power2(i)*f(i)*8760;  % Calcualte the anual energy  production using the trapezium rule
