@@ -25,11 +25,41 @@ end
 Mt = (0.5*rho.*Vrel.^2.*Chord.*Ct)*deltay.*y; % Calcualte the moment due to torque at all points of the blade
 Mn = (0.5*rho.*Vrel.^2.*Chord.*Cn)*deltay.*y; % Calcualte the moment due to root bending at all points of the blade
 
-Local_Force = Mn./y; % Calcualting the normal force on the blade at each point
 
-%Total_Force = sum(Local_Force)
+%% BLADE BENDING CALCULATIONS
 
-% CALAUT THE DIFLECTION
+%RUN THE INDUCED VELOCITY CALCULATION FOR ALL NODES
+y_nodes(1:N) = [RootRadius:deltay:TipRadius]; % Generate N points at the nodes of the blade
+for j=1:N
+    ThetaR_nodes(j) = Theta0+y_nodes(j)*ThetaTwist; % Calcualte the value of twist at the particular point on the blades span
+    Chord_nodes(j) = MeanChord + ((y_nodes(j)-((TipRadius-RootRadius)/2))*ChordGrad); % Calcualte the value of chord legnth at the particular point on the blades span
+    [~, ~,~, Cn_nodes(j), Ct_nodes(j), Vrel_nodes(j)] = WTInducedCalcs(a, adash, V0, omega, y_nodes(j), ThetaR_nodes(j), Chord_nodes(j), B, TipRadius); % Run the induceed calculations at a specific poinot on the blade
+    EIPoint_nodes(j) = 40e9*((Chord_nodes(j)*(0.2*Chord_nodes(j))^3)/12); % Calculate the approximate value of blade stiffness for each Chord section about 1st principal axis
+    EIPoint_nodes(j) = 40e9*((Chord_nodes(j)*(0.2*Chord_nodes(j))^3)/12); % Calculate the approximate value of blade stiffness for each Chord section about 2nd principal axis
+end
+
+Mt_nodes = (0.5*rho.*Vrel.^2.*Chord.*Ct)*deltay.*y; % Calcualte the moment due to torque at all points of the blade at nodes
+Mn_nodes = (0.5*rho.*Vrel.^2.*Chord.*Cn)*deltay.*y; % Calcualte the moment due to root bending at all points of the blade at nodes
+
+LocalForce_nodes_n = Mn./(y*deltay); % Calcualting the normal force on the blade at each point
+LocalForce_nodes_t = Mt./(y*deltay); % Calcualting the tangental force on the blade at each point
+
+My = zeros(1,N); % Setting up matrix of zeros for y bending moment
+Mz = zeros(1,N); % Setting up matrix of zeros for z bending moment
+Ty = zeros(1,N); % Setting up matrix of zeros for y shear force
+Tz = zeros(1,N); % Setting up matrix of zeros for z shear force
+
+M1 = My.*cos(ThetaR_nodes) - Mz.*sin(ThetaR_nodes); % Calculating bending moment in 1st principal axes
+M2 = My.*sin(ThetaR_nodes) + Mz.*cos(ThetaR_nodes); % Calculating bending moment in 1nd principal axes
+k1 = M1./EIPoint_nodes(Chord_nodes); % Calculating curvature about 1st principal axes
+k2 = M2./EI2Point_nodes(Chord_nodes); % Calculating curvature about moment in 1st principal axes
+
+kz=-k1.*sin(node_thetas) + k2.*cos(node_thetas);
+ky=k1.*cos(node_thetas)+k2.*sin(node_thetas);
+
+%% OLD BENDING CODE
+
+% CALAUTE THE DIFLECTION
 for i=1:N-1 % Calculate the local deflection at the points.
     deltaX_local(i) = ((Local_Force(i)*y(i)^2)/(24*EIPoint(i)*span))*((2*span^2)+(2*span-y(i))^2); %Calculating the local deflection due to normal force at each point of the blade
 end
