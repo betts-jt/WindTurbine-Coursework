@@ -1,4 +1,4 @@
-function [Diff, Vhalf, Power2, BetzPower, AEPV, f, AEP] = WTVelocityRange(Parameters, A, k, omega, MeanChord, TipRadius, RootRadius, B, MinV0, MaxV0)
+function [Diff, AEP, BAEP, FinalBladeDif, y] = WTVelocityRange(Parameters, A, k, omega, MeanChord, TipRadius, RootRadius, B, MinV0, MaxV0)
 
 %3: ANNUAL ENERGY - loop WTSingleVelocity to find the moments across the
 %entire velocity range. Combine this with the frequency information to get
@@ -36,6 +36,8 @@ end
 if max(MaxDef_n)>3 % Check is bending is greater than 3. 3 is the point the blade hits the tower
     AEP = AEP-(1e10*(max(MaxDef_n)-3));
 end
+
+FinalBladeDef = max(MaxDef_n); % Maximum blade deflection
 
 BAEP = sum(BetzPower);
 Diff =BAEP-AEP;

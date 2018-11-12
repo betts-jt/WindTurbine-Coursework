@@ -1,4 +1,4 @@
-function [outputArg1,outputArg2] = SingleRun(Theta0 ThetaTwist ChordGrad)
+function [Diff, AEP, FinalBladeDif] = SingleRun(Theta0 ThetaTwist ChordGrad)
 % This function runs the velocity calculatiuons for a single blade to give
 % details of how it performed and details relating to its possible AEP and
 % the deflection of the blade when in  use
@@ -16,7 +16,7 @@ variables.MinV0 = 5; % Minimum wids speed for turbine to run (cut in speed)
 variables.MaxV0 = 25; % Maximum speed of wind before turbine shuts down
 
 %RUN THE VELOCITY RANGE FUNCTION
-[Diff, Vhalf, Power2, BetzPower, AEPV, f, AEP] = WTVelocityRange([Theta0 ThetaTwist ChordGrad], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
+[Diff, AEP, BAEP, FinalBladeDif, y] = WTVelocityRange([Theta0 ThetaTwist ChordGrad], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
 
 end
 
