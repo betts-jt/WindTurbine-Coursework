@@ -37,7 +37,7 @@ if max(MaxDef_n)>3 % Check is bending is greater than 3. 3 is the point the blad
     AEP = AEP-(1e10*(max(MaxDef_n)-3));
 end
 
-FinalBladeDef = max(MaxDef_n); % Maximum blade deflection
+FinalBladeDif = max(MaxDef_n); % Maximum blade deflection
 
 BAEP = sum(BetzPower);
 Diff =BAEP-AEP;
