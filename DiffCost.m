@@ -1,5 +1,7 @@
 function [Diff] = DiffCost(INPUT)
-%UNTITLED Summary of this function goes here
+% This is a cost function to use in an optimisation loop. It takes in the
+% upper/ lower bounds and start point and returns the value of diff, the
+% difference between the AEP and the betz AEP value
 %   Detailed explanation goes here
     
 % GENERATE A STRUCTURE OF VARIABLES

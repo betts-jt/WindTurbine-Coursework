@@ -1,6 +1,8 @@
 function [x_Final, Diff_final] = WTOptimisation_OptimisationForLoop()
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+%This function runs the optimiser a number of different times using a foor
+%loop to start it from a different point each time in an attempt to
+%mimimise the chance of falling into a local minima
+
 
 addpath('Lib'); %Add Lib folder to path to enable functions within that folder to be used in this function
 
