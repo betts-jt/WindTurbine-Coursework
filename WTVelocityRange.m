@@ -29,13 +29,14 @@ end
 AEP = sum(AEPV);
 
 
-if max(Mntot) >0.5e6
+if max(Mntot) >0.5e6 % Check if the root ebnding is greater than the maximum ammount allowed in the coursework sheet
     AEP = AEP-(1e10*(max(Mntot)-0.5e6));
 end
 
-if max(MaxDef_n)>3
+if max(MaxDef_n)>3 % Check is bending is greater than 3. 3 is the point the blade hits the tower
     AEP = AEP-(1e10*(max(MaxDef_n)-3));
 end
+
 BAEP = sum(BetzPower);
 Diff =BAEP-AEP;
 
