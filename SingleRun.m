@@ -1,7 +1,9 @@
-function [Diff, AEP, FinalBladeDif] = SingleRun(Theta0 ThetaTwist ChordGrad)
+function [Diff, AEP, BAEP, FinalBladeDif,y] = SingleRun(Theta0, ThetaTwist, ChordGrad)
 % This function runs the velocity calculatiuons for a single blade to give
 % details of how it performed and details relating to its possible AEP and
 % the deflection of the blade when in  use
+% Use this to run if x output from optimiser is already in the workspace
+%   [Diff, AEP, BAEP, FinalBladeDif,y] = SingleRun(deg2rad(x_Final(1)), deg2rad(x_Final(2)), x_Final(3))
 
 
 % GENERATE A STRUCTURE OF VARIABLES

@@ -16,7 +16,7 @@ V=[MinV0:Interval:MaxV0];
 Vhalf = [MinV0+Interval/2:Interval:MaxV0-Interval/2];
 
 parfor i=1:length(V) % Run a parallal processing for loop
-    [Mttot, Mntot(i),MaxDef_n(i),Power(i), y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
+    [Mttot, Mntot(i),MaxDef_n(i),Power(i), N(i), a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
 end
 
 for i=1:length(V)-1
@@ -33,14 +33,20 @@ if max(Mntot) >0.5e6 % Check if the root ebnding is greater than the maximum amm
     AEP = AEP-(1e10*(max(Mntot)-0.5e6));
 end
 
-if max(MaxDef_n)>3 % Check is bending is greater than 3. 3 is the point the blade hits the tower
+if max(abs(MaxDef_n))>3 % Check is bending is greater than 3. 3 is the point the blade hits the tower
     AEP = AEP-(1e10*(max(MaxDef_n)-3));
+    max(abs(MaxDef_n))
 end
-
+max(abs(MaxDef_n))
 FinalBladeDif = max(MaxDef_n); % Maximum blade deflection
 
 BAEP = sum(BetzPower);
 Diff =BAEP-AEP;
+
+% CALCULATE THE VALUES OF Y FOR FUNCTION OUTPUT
+span = TipRadius-RootRadius; %Total Legnth of Blade
+deltay = span/(N(1)-1); %Change in span between sections
+y(1:N(1)-1) = [RootRadius+deltay/2:deltay:TipRadius-deltay/2]; % Generate N points along the blade as values of span
 
 end
 

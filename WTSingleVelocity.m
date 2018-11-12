@@ -1,4 +1,4 @@
-function [Mttot, Mntot, MaxDef_n, Power, y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho)
+function [Mttot, Mntot, MaxDef_n, Power, N, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V0, Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho)
 %2: WHOLE ROTOR - loop WTInducedCalcs to find the values for all radii,
 %then integrate these to get the normal and tangential moment at the blade
 %root.
@@ -74,7 +74,7 @@ end
 % MAXIMUM DEFLECTION
 MaxDef_t = DeflectionDistance_t(end); % Calculate the maximum tangential deflection
 MaxDef_n = DeflectionDistance_n(end); % Calculate the maximum normal bending
-MaxDef_n = -MaxDef_n; % Invert normal deflection to make backwards bending positive
+MaxDef_n = MaxDef_n; % Invert normal deflection to make backwards bending positive
 
 % TOTAL MOMENT CALCULATIONS
 Mttot = sum(Mt); % Caluclate the total bending moment due to torque ofthe blade 
