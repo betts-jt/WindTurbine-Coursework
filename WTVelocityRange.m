@@ -24,19 +24,18 @@ for i=1:length(V)-1
     Power2(i) = (0.5*(Power(i)+Power(i+1))); % Calculate the power at each value of Vhalf using the trapezium rule
     AEPV(i) = Power2(i)*f(i)*8760;  % Calcualte the anual energy  production using the trapezium rule
     BetzPower(i) = (16/27)*(0.5*rho*Vhalf(i)^3*BladeArea)*f(i)*8760; % Calcualte the ideal power generated at each windspeed using the Betz limit
-    
-    if max(Mntot) >0.5e6 % Check if maximum root bending has occured
-        Power2(i)=0; % Set the power at that speed to 0 to indicate turbine shutdown
-    end
-    
-    if max(deltaX_total)>3 % Check is mamimum deflection has occured (Blade is hitting tower)
-        Power2(i)=0; % Set the power at that speed to 0 to indicate turbine shutdown
-    end
-    
 end
 
 AEP = sum(AEPV);
 
+
+if max(Mntot) >0.5e6
+    AEP = AEP-(1e10*(max(Mntot)-0.5e6));
+end
+
+if max(deltaX_total)>3
+    AEP = AEP-(1e10*(max(deltaX_total)-3));
+end
 BAEP = sum(BetzPower);
 Diff =BAEP-AEP;
 
