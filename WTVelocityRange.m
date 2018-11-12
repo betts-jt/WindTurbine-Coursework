@@ -16,7 +16,7 @@ V=[MinV0:Interval:MaxV0];
 Vhalf = [MinV0+Interval/2:Interval:MaxV0-Interval/2];
 
 for i=1:length(V) % Run a parallal processing for loop
-    [Mttot, Mntot(i),deltaX_total(i),Power(i), y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
+    [Mttot, Mntot(i),MaxDef_n(i),Power(i), y, a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
 end
 
 for i=1:length(V)-1
@@ -33,8 +33,8 @@ if max(Mntot) >0.5e6
     AEP = AEP-(1e10*(max(Mntot)-0.5e6));
 end
 
-if max(deltaX_total)>3
-    AEP = AEP-(1e10*(max(deltaX_total)-3));
+if max(MaxDef_n)>3
+    AEP = AEP-(1e10*(max(MaxDef_n)-3));
 end
 BAEP = sum(BetzPower);
 Diff =BAEP-AEP;
