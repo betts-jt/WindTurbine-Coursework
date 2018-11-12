@@ -66,14 +66,15 @@ for i = 1:N-1
     % Calcualting z deflection angle
     DeflectionAngle_n(i+1) = DeflectionAngle_n(i) + 0.5*(kn(i+1)+kn(i))*deltay;
     % Calcualting y deflection distance
-    DeflectionDistance_t(i+1) = DeflectionDistance_t(i) + DeflectionAngle_t(i)*deltay + ((1/6)*kn(i+1)+(1/3)*kn(i))*deltay^2;
+    DeflectionDistance_t(i+1) = DeflectionDistance_t(i) + DeflectionAngle_n(i)*deltay + ((1/6)*kn(i+1)+(1/3)*kn(i))*deltay^2;
     % Calcualting z deflection distance
-    DeflectionDistance_n(i+1) = DeflectionDistance_n(i) + DeflectionAngle_n(i)*deltay + ((1/6)*kt(i+1)+(1/3)*kt(i))*deltay^2;
+    DeflectionDistance_n(i+1) = DeflectionDistance_n(i) + DeflectionAngle_t(i)*deltay + ((1/6)*kt(i+1)+(1/3)*kt(i))*deltay^2;
 end
 
 % MAXIMUM DEFLECTION
 MaxDef_t = DeflectionDistance_t(end); % Calculate the maximum tangential deflection
 MaxDef_n = DeflectionDistance_n(end); % Calculate the maximum normal bending
+MaxDef_n = -MaxDef_n; % Invert normal deflection to make backwards bending positive
 
 % TOTAL MOMENT CALCULATIONS
 Mttot = sum(Mt); % Caluclate the total bending moment due to torque ofthe blade 
