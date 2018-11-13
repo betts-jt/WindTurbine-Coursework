@@ -32,11 +32,11 @@ Mn = (0.5*rho.*Vrel.^2.*Chord.*Cn)*deltay.*y; % Calcualte the moment due to root
 y_nodes(1:N) = [RootRadius:deltay:TipRadius]; % Generate N points at the nodes of the blade
 
 for j=1:N
-    ThetaR_nodes(j) = Theta0+y_nodes(j)*ThetaTwist; % Calcualte the value of twist at the particular point on the blades span
+    ThetaR_nodes(j) = Theta0+(y_nodes(j)-1)*ThetaTwist; % Calcualte the value of twist at the particular point on the blades span
     Chord_nodes(j) = MeanChord + ((y_nodes(j)-((TipRadius-RootRadius)/2))*ChordGrad); % Calcualte the value of chord legnth at the particular point on the blades span
     [~, ~,~, Cn_nodes(j), Ct_nodes(j), Vrel_nodes(j)] = WTInducedCalcs(a, adash, V0, omega, y_nodes(j), ThetaR_nodes(j), Chord_nodes(j), B, TipRadius); % Run the induceed calculations at a specific poinot on the blade
-    EIPoint_nodes(j) = 40e9*((Chord_nodes(j)*(0.2*Chord_nodes(j))^3)/12); % Calculate the approximate value of blade stiffness for each Chord section about 2nd principal axis
     EIPoint2_nodes(j) = 40e9*(((0.2*Chord_nodes(j))*Chord_nodes(j)^3)/12); % Calculate the approximate value of blade stiffness for each Chord section about 1st principal axis
+    EIPoint_nodes(j) = 40e9*((Chord_nodes(j)*(0.2*Chord_nodes(j))^3)/12); % Calculate the approximate value of blade stiffness for each Chord section about 2nd principal axis
 end
 
 Mt_nodes = (0.5*rho.*Vrel_nodes.^2.*Chord_nodes.*Ct_nodes)*deltay.*y_nodes; % Calcualte the moment due to torque at all points of the blade at nodes
@@ -54,7 +54,7 @@ count = N;
 for i = 2:N
     T_t(count-1) = T_t(count) + 0.5*(LocalForce_nodes_t(count-1) + LocalForce_nodes_t(count))*deltay;
     T_n(count-1) = T_n(count) + 0.5*(LocalForce_nodes_n(count-1) + LocalForce_nodes_n(count))*deltay;
-    M_t(count-1) = M_t(count) + T_n(count)*deltay - ((1/6)*LocalForce_nodes_n(count-1) + (1/3)*LocalForce_nodes_n(count))*deltay^2;
+    M_t(count-1) = M_t(count) - T_n(count)*deltay - ((1/6)*LocalForce_nodes_n(count-1) + (1/3)*LocalForce_nodes_n(count))*deltay^2;
     M_n(count-1) = M_n(count) + T_t(count)*deltay + ((1/6)*LocalForce_nodes_t(count-1) + (1/3)*LocalForce_nodes_t(count))*deltay^2;
     count = count - 1; % Reduce loop counter by 1
 end
@@ -62,8 +62,8 @@ end
 
 M1 = M_t.*cos(ThetaR_nodes) - M_n.*sin(ThetaR_nodes); % Calculating bending moment in 1st principal axes
 M2 = M_t.*sin(ThetaR_nodes) + M_n.*cos(ThetaR_nodes); % Calculating bending moment in 1nd principal axes
-k1 = M1./EIPoint2_nodes; % Calculating curvature about 1st principal axes
-k2 = M2./EIPoint_nodes; % Calculating curvature about moment in 1st principal axes
+k1 = M1./EIPoint_nodes; % Calculating curvature about 1st principal axes
+k2 = M2./EIPoint2_nodes; % Calculating curvature about moment in 1st principal axes
 
 kn = -k1.*sin(ThetaR_nodes) + k2.*cos(ThetaR_nodes); % Converting curvature to normal axis of blade
 kt = k1.*cos(ThetaR_nodes)+k2.*sin(ThetaR_nodes);% Converting curvature to tangential axis of blade
@@ -89,7 +89,7 @@ end
 % MAXIMUM DEFLECTION
 MaxDef_t = DeflectionDistance_t(end); % Calculate the maximum tangential deflection
 MaxDef_n = DeflectionDistance_n(end); % Calculate the maximum normal bending
-MaxDef_n = MaxDef_n; % Invert normal deflection to make backwards bending positive
+MaxDef_n = -MaxDef_n; % Invert normal deflection to make backwards bending positive
 
 % TOTAL MOMENT CALCULATIONS
 Mttot = sum(Mt); % Caluclate the total bending moment due to torque ofthe blade 
