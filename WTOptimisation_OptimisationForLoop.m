@@ -1,6 +1,6 @@
 function [x_Final, Diff_final] = WTOptimisation_OptimisationForLoop()
-%This function runs the optimiser a number of different times using a foor
-%loop to start it from a different point each time in an attempt to
+%This function runs the optimiser a number of different times using a for
+%  loop to start it from a different point each time in an attempt to
 %mimimise the chance of falling into a local minima
 
 

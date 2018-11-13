@@ -1,4 +1,7 @@
 function [x_Final] = WTOptimisation_MultiStart()
+% This function runs the turbine blade optimiser using a multistart loop
+% and the fmincon optimiser function in an attempt to avoide falling into
+% local minima
 
 addpath('Lib'); %Add Lib folder to path to enable functions within that folder to be used in this function
 %4: OPTIMISATION - use fminsearchbnd to optimise theta0, thetatw, and cgrad for
