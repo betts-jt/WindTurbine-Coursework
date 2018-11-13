@@ -1,4 +1,4 @@
-function [x] = WTOptimisation_MultiStart()
+function [x_Final] = WTOptimisation_MultiStart()
 
 addpath('Lib'); %Add Lib folder to path to enable functions within that folder to be used in this function
 %4: OPTIMISATION - use fminsearchbnd to optimise theta0, thetatw, and cgrad for
@@ -14,5 +14,5 @@ problem = createOptimProblem('fmincon','objective',...
 ms = MultiStart;
 
 [x,~] = run(ms,problem,100);
-x=[rad2deg(x(1)) rad2deg(x(2)) x(3)];
+x_Final=[rad2deg(x(1)) rad2deg(x(2)) x(3)];
 end
