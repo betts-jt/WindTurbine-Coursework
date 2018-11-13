@@ -20,7 +20,7 @@ ThetaTwist = INPUT(2);
 ChordGrad = INPUT(3);
 
 
-[Diff,~,~,~,~,~,~] = WTVelocityRange([Theta0 ThetaTwist ChordGrad], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
+[Diff,~,~,~,~,~,~,~,~,~,~,~] = WTVelocityRange([Theta0 ThetaTwist ChordGrad], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
 
 end
 
