@@ -18,7 +18,7 @@ variables.MinV0 = 5; % Minimum wids speed for turbine to run (cut in speed)
 variables.MaxV0 = 25; % Maximum speed of wind before turbine shuts down
 
 %RUN THE VELOCITY RANGE FUNCTION
-[Diff, AEP, AEPV, BAEP, BEPV, FinalBladeDif, y, DeflectionDistance_n,V,Power,BPower,f] = WTVelocityRange([Theta0 ThetaTwist ChordGrad], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
+[Diff, AEP, AEPV, BAEP, BEPV, MaxDef_n, y, DeflectionDistance_n,V,Power,BPower,f] = WTVelocityRange([Theta0 ThetaTwist ChordGrad], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
 
 %% PLOT AEP vs BEPV GRAPH
 figure(1)
@@ -29,26 +29,26 @@ xlabel('y, (m)')
 legend('AEP', 'Betz Ideal AEP')
 
 %% PLOT BLADE BENDING DIAGRAM
-    figure(2)
+figure(2)
 for i=1:length(DeflectionDistance_n)
     hold on
     plot(-DeflectionDistance_n(i,:),y,-DeflectionDistance_n(i,:),-y)
 end
-    plot([3 3],[-20 20])
-    title('Blade Bending at Different Wind Speeds')
-    ylabel('y, (m)')
-    xlabel('deflection, (m)')
+plot([3 3],[-20 20])
+title('Blade Bending at Different Wind Speeds')
+ylabel('y, (m)')
+xlabel('deflection, (m)')
 
-    %% PLOT BLADE BENDING DIAGRAM
-    figure(3)
+%% PLOT BLADE BENDING DIAGRAM
+figure(3)
 for i=1:length(DeflectionDistance_n)
     hold on
     plot(-DeflectionDistance_n(i,:),y)
 end
-    plot([3 3],[0 20])
-    title('Blade Bending at Different Wind Speeds')
-    ylabel('y, (m)')
-    xlabel('deflection, (m)')
+plot([3 3],[0 20])
+title('Blade Bending at Different Wind Speeds')
+ylabel('y, (m)')
+xlabel('deflection, (m)')
 %% PLOT V0 vs POWER
 figure(4)
 plot(V,Power,'r-',V(1:end-1),BPower,'b--')
