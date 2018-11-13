@@ -1,4 +1,4 @@
-function [Diff, AEP, AEPV, BAEP, BEPV, FinalBladeDif, y, DeflectionDistance_n,V,Power,BPower,f] = WTVelocityRange(Parameters, A, k, omega, MeanChord, TipRadius, RootRadius, B, MinV0, MaxV0)
+function [Diff, AEP, AEPV, BAEP, BEPV, MaxDef_n, y, DeflectionDistance_n,V,Power,BPower,f] = WTVelocityRange(Parameters, A, k, omega, MeanChord, TipRadius, RootRadius, B, MinV0, MaxV0)
 
 %3: ANNUAL ENERGY - loop WTSingleVelocity to find the moments across the
 %entire velocity range. Combine this with the frequency information to get
@@ -35,15 +35,6 @@ for i=1:length(V)-1
 end
 
 AEP = sum(AEPV);
-
-for i=1:length(MaxDef_n)
-    if MaxDef_n(i) < 3
-        MaxDefBeforeLimit_n(i) = MaxDef_n(i);
-    end
-end
-
-FinalBladeDif = max(MaxDefBeforeLimit_n); % Maximum blade deflection
-
 
 BAEP = sum(BEPV);
 Diff =BAEP-AEP;
