@@ -21,7 +21,7 @@ variables.MaxV0 = 25; % Maximum speed of wind before turbine shuts down
 [Diff, AEP, AEPV, BAEP, BEPV, MaxDef_n, y, DeflectionDistance_n,V,Power,BPower,f] = WTVelocityRange([Theta0 ThetaTwist ChordGrad], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
 
 
-FinalBladeDif = MaxDef_n(min(find(AEPV==0))-1); % Maximum blade deflection
+FinalBladeDif = MaxDef_n(find(AEPV>0,1,'last')); % Maximum blade deflection
 %% PLOT AEP vs BEPV GRAPH
 figure(1)
 plot(y,AEPV,'r-',y,BEPV,'b--')
