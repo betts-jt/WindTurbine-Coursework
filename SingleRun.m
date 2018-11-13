@@ -1,4 +1,4 @@
-function [FinalBladeDif] = SingleRun(Theta0, ThetaTwist, ChordGrad)
+function [] = SingleRun(Theta0, ThetaTwist, ChordGrad)
 % This function runs the velocity calculatiuons for a single blade to give
 % details of how it performed and details relating to its possible AEP and
 % the deflection of the blade when in  use
