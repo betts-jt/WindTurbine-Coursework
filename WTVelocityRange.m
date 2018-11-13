@@ -15,8 +15,16 @@ BladeArea = pi()*(TipRadius^2-RootRadius); % Calcualte the swept area of the bla
 V=[MinV0:Interval:MaxV0];
 Vhalf = [MinV0+Interval/2:Interval:MaxV0-Interval/2];
 
-parfor i=1:length(V) % Run a parallal processing for loop
+for i=1:length(V) % Run a parallal processing for loop
     [Mttot, Mntot(i),MaxDef_n(i),Power(i), N(i), a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
+    
+    if Mntot(i) >0.5e6 % Check if the root ebnding is greater than the maximum ammount allowed in the coursework sheet
+        Power(i) = 0; % Set local power to 0
+    end
+    
+    if abs(MaxDef_n(i))>3 % Check is bending is greater than 3. 3 is the point the blade hits the tower
+        Power(i) = 0; % Set local power to 0
+    end
 end
 
 for i=1:length(V)-1
@@ -29,16 +37,7 @@ end
 AEP = sum(AEPV);
 
 
-if max(Mntot) >0.5e6 % Check if the root ebnding is greater than the maximum ammount allowed in the coursework sheet
-    AEP = AEP-(1e10*(max(Mntot)-0.5e6));
-end
-
-if max(abs(MaxDef_n))>3 % Check is bending is greater than 3. 3 is the point the blade hits the tower
-    AEP = AEP-(1e10*(max(MaxDef_n)-3));
-    max(abs(MaxDef_n))
-end
-max(abs(MaxDef_n))
-FinalBladeDif = max(MaxDef_n); % Maximum blade deflection
+FinalBladeDif = MaxDef_n(min(find(AEPV==0))-1); % Maximum blade deflection
 
 BAEP = sum(BetzPower);
 Diff =BAEP-AEP;
