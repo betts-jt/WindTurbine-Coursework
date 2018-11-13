@@ -1,4 +1,4 @@
-function [x] = WTOptimisation()
+function [x_Final] = WTOptimisation()
 % OPTIMISATION - use fminsearchbnd to optimise theta0, thetatw, and cgrad for
 %maximum AEP.
     % Initial, Lb & Ub are both arrays of 3 numbers with Initial being the
@@ -16,5 +16,5 @@ opts.MaxIter = 100; %Max number of iterations
 
 [x, diff, exitflag] = fminsearchbnd(@DiffCost, [deg2rad(2.5) deg2rad(-1) 0], [deg2rad(2) deg2rad(-2) -0.1], [deg2rad(20) deg2rad(-0.1) 0.1], opts);
 
-x=[rad2deg(x(1)) rad2deg(x(2)) x(3)];
+x_Final=[rad2deg(x(1)) rad2deg(x(2)) x(3)];
 end
