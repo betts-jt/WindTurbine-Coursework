@@ -1,4 +1,4 @@
-function [Diff, AEP, AEPV, BAEP, BEPV, FinalBladeDif, y] = WTVelocityRange(Parameters, A, k, omega, MeanChord, TipRadius, RootRadius, B, MinV0, MaxV0)
+function [Diff, AEP, AEPV, BAEP, BEPV, FinalBladeDif, y, DeflectionDistance_n] = WTVelocityRange(Parameters, A, k, omega, MeanChord, TipRadius, RootRadius, B, MinV0, MaxV0)
 
 %3: ANNUAL ENERGY - loop WTSingleVelocity to find the moments across the
 %entire velocity range. Combine this with the frequency information to get
@@ -16,7 +16,7 @@ V=[MinV0:Interval:MaxV0];
 Vhalf = [MinV0+Interval/2:Interval:MaxV0-Interval/2];
 
 for i=1:length(V) % Run a parallal processing for loop
-    [Mttot, Mntot(i),MaxDef_n(i),Power(i), N(i), a_out, adash_out, phi, Cn, Ct] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
+    [~, Mntot(i),MaxDef_n(i),Power(i), N(i), a_out, adash_out, phi, Cn, Ct,DeflectionDistance_n(i,:)] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
     
     if Mntot(i) >0.5e6 % Check if the root ebnding is greater than the maximum ammount allowed in the coursework sheet
         Power(i) = 0; % Set local power to 0
@@ -45,7 +45,7 @@ Diff =BAEP-AEP;
 % CALCULATE THE VALUES OF Y FOR FUNCTION OUTPUT
 span = TipRadius-RootRadius; %Total Legnth of Blade
 deltay = span/(N(1)-1); %Change in span between sections
-y(1:N(1)-1) = [RootRadius+deltay/2:deltay:TipRadius-deltay/2]; % Generate N points along the blade as values of span
+y(1:N) = [RootRadius:deltay:TipRadius]; % Generate N points along the blade as values of span
 
 end
 
