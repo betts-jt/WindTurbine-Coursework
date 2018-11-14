@@ -70,7 +70,7 @@ end
 %% Plot graphs to show global maxima has been reached
 x_Final_ForLoop = [8.6057 -0.4383 0.0302];
 
-res = 20;
+res = 100;
 
 if Theta0fix == 1
     Theta0 = [2:(20-2)/(res-1):20];
