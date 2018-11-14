@@ -25,6 +25,7 @@ if plotInitialGraphs == 1
     FinalBladeDif = MaxDef_n(find(AEPV>0,1,'last')); % Maximum blade deflection
     %% PLOT AEP vs BEPV GRAPH
     figure(1)
+    hold on
     plot(y,AEPV,'r-',y,BEPV,'b--')
     title('Final Blade AEP vs Betz Ideal AEP')
     ylabel('AEP, (W)')
