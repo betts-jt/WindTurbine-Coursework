@@ -19,19 +19,18 @@ variables.MaxV0 = 25; % Maximum speed of wind before turbine shuts down
 
 if plotInitialGraphs == 1
     %RUN THE VELOCITY RANGE FUNCTION
-    [Diff, AEP, AEPV, BAEP, BEPV, MaxDef_n, y, DeflectionDistance_n,V,Power,BPower,f] = WTVelocityRange([Theta0 ThetaTwist ChordGrad], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
+    [Diff, AEP, AEPV, BAEP, BEPV, MaxDef_n, y, DeflectionDistance_n,V,Power,BPower,f, Mntot] = WTVelocityRange([Theta0 ThetaTwist ChordGrad], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
     
     
     FinalBladeDif = MaxDef_n(find(AEPV>0,1,'last')); % Maximum blade deflection
     %% PLOT AEP vs BEPV GRAPH
     figure(1)
     hold on
-    plot(y,AEPV,'r-',y,BEPV,'b--')
+    plot(V(2:21),AEPV,'r-',V(2:21),BEPV,'b--')
     title('Final Blade AEP vs Betz Ideal AEP')
     ylabel('AEP, (W)')
-    xlabel('y, (m)')
+    xlabel('V0, (m/s)')
     legend('AEP', 'Betz Ideal AEP')
-    
     %% PLOT BLADE BENDING DIAGRAM
     figure(2)
     for i=1:2:length(DeflectionDistance_n)
@@ -45,7 +44,7 @@ if plotInitialGraphs == 1
     
     %% PLOT BLADE BENDING DIAGRAM
     figure(3)
-    for i=1:2:length(DeflectionDistance_n)
+    for i=1:length(DeflectionDistance_n)
         hold on
         plot(-DeflectionDistance_n(i,:),y)
     end
@@ -63,10 +62,19 @@ if plotInitialGraphs == 1
     
     %% PLOT PROBABLITIY VS WIND SPEED
     figure(5)
-    plot(V(1:end-1),f)
+    plot(V(1:end-1),f, 'b-')
     xlabel('Wind Velocity, (m/s)')
     ylabel('Probility')
     title('Wind Velocity vs Probability')
+    
+    %% PLOT Mn vs y
+    figure(6)
+    hold on
+    plot(V,Mntot, 'b-')
+    plot([5 25],[5e+05 5e+05], 'r-')
+    xlabel('V0, (m/s)')
+    ylabel('Mn')
+    title('Normal Bending moment vs windspeed')
 end
 %% Plot graphs to show global maxima has been reached
 x_Final_ForLoop = [8.6057 -0.4383 0.0302];
@@ -81,7 +89,7 @@ if Theta0fix == 1
     for aa = 1:res
         [Diff, AEP(aa), AEPV, BAEP(aa), BEPV, MaxDef_n, y, DeflectionDistance_n,V,Power,BPower,f] = WTVelocityRange([deg2rad(Theta0(aa)) deg2rad(ThetaTwist) ChordGrad], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
     end
-    figure(6)
+    figure(7)
     hold on
     plot(Theta0, AEP, 'r')
     plot([x_Final_ForLoop(1) x_Final_ForLoop(1)],[0, max(AEP)], 'b')
@@ -99,7 +107,7 @@ if ThetaTWfix == 1
     for bb = 1:res
         [Diff, AEP(bb), AEPV, BAEP(bb), BEPV, MaxDef_n, y, DeflectionDistance_n,V,Power,BPower,f] = WTVelocityRange([deg2rad(Theta0) deg2rad(ThetaTwist(bb)) ChordGrad], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
     end
-    figure(7)
+    figure(8)
     hold on
     plot(ThetaTwist, AEP, 'r')
     plot([x_Final_ForLoop(2) x_Final_ForLoop(2)],[0, max(AEP)], 'b')
@@ -115,9 +123,9 @@ if ChordGradfix == 1
     ChordGrad = [-0.1:(0.1--0.1)/(res-1):0.1];
     
     for cc = 1:res
-        [Diff, AEP(cc), AEPV, BAEP(cc), BEPV, MaxDef_n, y, DeflectionDistance_n,V,Power,BPower,f] = WTVelocityRange([deg2rad(Theta0) deg2rad(ThetaTwist) ChordGrad(cc)], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
+        [Diff, AEP(cc), AEPV, BAEP(cc), BEPV, MaxDef_n, y, DeflectionDistance_n,V,Power,BPower,f, Mntot] = WTVelocityRange([deg2rad(Theta0) deg2rad(ThetaTwist) ChordGrad(cc)], variables.A, variables.k, variables.omega, variables.MeanChord, variables.TipRadius, variables.RootRadius, variables.B, variables.MinV0, variables.MaxV0);
     end
-    figure(8)
+    figure(9)
     hold on
     plot(ChordGrad, AEP, 'r')
     plot([x_Final_ForLoop(3) x_Final_ForLoop(3)],[0, max(AEP)], 'b')
