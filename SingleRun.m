@@ -33,7 +33,7 @@ if plotInitialGraphs == 1
     
     %% PLOT BLADE BENDING DIAGRAM
     figure(2)
-    for i=1:length(DeflectionDistance_n)
+    for i=1:2:length(DeflectionDistance_n)
         hold on
         plot(-DeflectionDistance_n(i,:),y,-DeflectionDistance_n(i,:),-y)
     end
@@ -44,7 +44,7 @@ if plotInitialGraphs == 1
     
     %% PLOT BLADE BENDING DIAGRAM
     figure(3)
-    for i=1:length(DeflectionDistance_n)
+    for i=1:2:length(DeflectionDistance_n)
         hold on
         plot(-DeflectionDistance_n(i,:),y)
     end
@@ -70,7 +70,7 @@ end
 %% Plot graphs to show global maxima has been reached
 x_Final_ForLoop = [8.6057 -0.4383 0.0302];
 
-res = 100;
+res = 500;
 
 if Theta0fix == 1
     Theta0 = [2:(20-2)/(res-1):20];
