@@ -4,7 +4,8 @@ function [x_Final, Diff_final] = WTOptimisation_OptimisationForLoop()
 %mimimise the chance of falling into a local minima
 
 
-addpath('Lib'); %Add Lib folder to path to enable functions within that folder to be used in this function
+addpath('Lib'); %Add Lib folder to path to enable functions within that folder 
+    % to be used in this function
 
 NumStartingPoints = 20; % Total number of starting poinmts for the optimiser
 
@@ -19,7 +20,9 @@ ThetaTW = [-2:(-0.1--2)/(NumStartingPoints-1):-0.1];
 Chordgrad = [-0.1:(0.1--0.1)/(NumStartingPoints-1):0.1];
 
 for i = 1:NumStartingPoints
-[x(i,:), diff(i), exitflag] = fminsearchbnd(@DiffCost, [deg2rad(Theta0(i)) deg2rad(ThetaTW(i)) Chordgrad(i)], [deg2rad(2) deg2rad(-2) -0.1], [deg2rad(20) deg2rad(-0.1) 0.1], opts);
+[x(i,:), diff(i), exitflag] = fminsearchbnd(@DiffCost, [deg2rad(Theta0(i)) ...
+    deg2rad(ThetaTW(i)) Chordgrad(i)], [deg2rad(2) deg2rad(-2) -0.1], [deg2rad(20) ...
+    deg2rad(-0.1) 0.1], opts);
 end
 
 [Diff_final,Diff_pos]=min(diff);
