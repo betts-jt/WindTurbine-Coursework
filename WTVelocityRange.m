@@ -1,4 +1,4 @@
-function [Diff, AEP, AEPV, BAEP, BEPV, MaxDef_n, y, DeflectionDistance_n,V,Power,BPower,f] = WTVelocityRange(Parameters, A, k, omega, MeanChord, TipRadius, RootRadius, B, MinV0, MaxV0)
+function [Diff, AEP, AEPV, BAEP, BEPV, MaxDef_n, y, DeflectionDistance_n,V,Power,BPower,f,Mntot] = WTVelocityRange(Parameters, A, k, omega, MeanChord, TipRadius, RootRadius, B, MinV0, MaxV0)
 
 %%: ANNUAL ENERGY - loop WTSingleVelocity to find the moments across the
 %entire velocity range. Combine this with the frequency information to get
