@@ -17,7 +17,12 @@ Vhalf = [MinV0+Interval/2:Interval:MaxV0-Interval/2];
 
 parfor i=1:length(V) % Run a parallal processing for loop
     [~, Mntot(i),MaxDef_n(i),Power(i), N(i), a_out, adash_out, phi, Cn, Ct,DeflectionDistance_n(i,:)] = WTSingleVelocity(V(i), Theta0, ThetaTwist, MeanChord, ChordGrad, TipRadius, RootRadius, omega, B, BladeArea, rho);
-    
+    if Power(i)<0
+        Power(i)=0;% Set local power to 0
+    end
+    if Mntot(i)<0
+        Power(i) = 0; % Set local power to 0
+    end
     if Mntot(i) >0.5e6 % Check if the root ebnding is greater than the maximum ammount allowed in the coursework sheet
         Power(i) = 0; % Set local power to 0
     end
